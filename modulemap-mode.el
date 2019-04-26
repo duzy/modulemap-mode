@@ -13,22 +13,32 @@
   :group 'tools
   :prefix "modulemap-")
 
-(defface modulemap-comment-face ; //...
-  '((t :inherit font-lock-comment-face))
-  "Face to used to highlight comments."
-  :group 'smart)
-
-(defface modulemap-module-name-face
-  '((t :inherit font-lock-variable-name-face)) ;; :background  "LightBlue1"
-  "Face to use for additionally highlighting rule targets in Font-Lock mode."
-  :group 'modulemap)
-
 ;; http://raebear.net/comp/emacscolors.html
 (defface modulemap-indent-face
   '((((class color) (background light)) :background "gray88" :italic t)
     (((class color) (background dark)) :background "LightDim" :italic t)
     (t :inherit font-lock-constant-face))
   "Face to use for additionally highlighting rule targets in Font-Lock mode."
+  :group 'modulemap)
+
+(defface modulemap-comment-face ; //...
+  '((t :inherit font-lock-comment-face))
+  "Face to used to highlight comments."
+  :group 'smart)
+
+(defface modulemap-module-name-face ;font-lock-type-face
+  '((t :inherit font-lock-variable-name-face)) ;; :background  "LightBlue1"
+  "Face to use for additionally highlighting rule targets in Font-Lock mode."
+  :group 'modulemap)
+
+(defface modulemap-property-face
+  '((t :inherit font-lock-builtin-face))
+  "Face name to use for modulemap properties."
+  :group 'modulemap)
+
+(defface modulemap-export-name-face
+  '((t :inherit font-lock-constant-face))
+  "Face name to use for modulemap export names."
   :group 'modulemap)
 
 (defface modulemap-keyword-face
@@ -48,13 +58,24 @@
 
 ;; example: makefile-make-font-lock-keywords
 (defconst modulemap-font-lock-keywords
-  `((,modulemap-keywords-regex
-     (1 'modulemap-keyword-face))
+  `(("\\(module\\)\\s-+\\(\\(?:[a-zA-Z0-9_]\\)+\\)"
+     (1 'modulemap-keyword-face)
+     (2 'modulemap-module-name-face))
+
+    ("\\(export\\)\\s-+\\(\\(?:[a-zA-Z0-9_*]\\)+\\)"
+     (1 'modulemap-keyword-face)
+     (2 'modulemap-export-name-face))
+
+    ("\\(\\[\\)\\(\\(?:[a-zA-Z0-9_]\\|\\s-+\\)+\\)\\(\\]\\)"
+     (1 'modulemap-property-face)
+     (2 'modulemap-property-face)
+     (3 'modulemap-property-face))
 
     ;;(,modulemap-keywords-function
     ;; (1 ...))
 
-    ))
+    (,modulemap-keywords-regex
+     (1 'modulemap-keyword-face))))
 
 (defcustom modulemap-mode-hook nil
   "Normal hook run by `modulemap-mode'."
