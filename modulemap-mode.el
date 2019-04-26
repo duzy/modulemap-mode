@@ -47,7 +47,7 @@
   :group 'modulemap)
 
 (defconst modulemap-keywords
-  `("module" "export" "header"
+  `("module" "export" "textual" "header"
     ;;,@(cdr makefile-statements)
     )
   "List of keywords understood by modulemap.")
@@ -62,7 +62,7 @@
      (1 'modulemap-keyword-face)
      (2 'modulemap-module-name-face))
 
-    ("\\(export\\)\\s-+\\(\\(?:[a-zA-Z0-9_*]\\)+\\)"
+    ("\\(export\\)\\s-+\\(\\(?:[a-zA-Z0-9_.*]\\)+\\)"
      (1 'modulemap-keyword-face)
      (2 'modulemap-export-name-face))
 
