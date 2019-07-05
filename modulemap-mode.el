@@ -47,7 +47,7 @@
   :group 'modulemap)
 
 (defconst modulemap-keywords
-  `("module" "export" "textual" "header"
+  `("module" "export" "textual" "header" "requires"
     ;;,@(cdr makefile-statements)
     )
   "List of keywords understood by modulemap.")
